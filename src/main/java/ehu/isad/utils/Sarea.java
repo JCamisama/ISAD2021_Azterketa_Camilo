@@ -54,6 +54,27 @@ public class Sarea {
         return jsonTestua;
     }
 
+
+    public static String urlReadmeLortu(String pUrlOsoa) {
+
+        String testua = "";
+
+        try {
+            URL openLib = new URL(pUrlOsoa);
+            URLConnection yc = openLib.openConnection();
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    yc.getInputStream()));
+            testua = in.readLine();
+            in.close();
+        } catch (MalformedURLException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return testua;
+    }
+
     public static ImageView irudiaLortu(String pUrl, String pIzenBerria){
 
         Image irudiBerria = null;
