@@ -1,9 +1,12 @@
 package ehu.isad.utils;
 
 import com.google.gson.Gson;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -50,6 +53,32 @@ public class Sarea {
 
         return jsonTestua;
     }
+
+    public static ImageView irudiaLortu(String pUrl, String pIzenBerria){
+
+        Image irudiBerria = null;
+        try {
+            irudiBerria = createImage(pUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        IrudiKud.getInstantzia().irudiaGorde(irudiBerria, pIzenBerria);
+
+        return new ImageView(irudiBerria);
+    }
+
+
+    private static Image createImage(String url) throws IOException {
+        URLConnection conn = new URL(url).openConnection();
+        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh;" +
+                "Intel Mac OS 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) " +
+                "Chrome/85.0.4183.121 Safari/537.36");
+        try (InputStream stream = conn.getInputStream()){
+            return new Image(stream);
+        }
+    }
+
 
 
     /*

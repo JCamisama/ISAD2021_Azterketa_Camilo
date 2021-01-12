@@ -46,6 +46,23 @@ public class IrudiKud {
     }
 
 
+    public String irudiaGordeFormatuZehaztu(Image pIrudia, String pIrudiIzenaFormaturekin){
+
+        //Irudia sortuko du eta horren formatua itzuli egingo du.
+        String kokapenOsoa = this.irudienDirektorioa+pIrudiIzenaFormaturekin;
+
+        File irteerakofitx = new File(kokapenOsoa);
+        BufferedImage bImage = SwingFXUtils.fromFXImage(pIrudia, null);
+        try {
+            ImageIO.write(bImage, formatua, irteerakofitx);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return this.formatua;
+    }
+
+
     public Image irudiaKargatu(String pIrudiaIzena) {
 
         BufferedImage   irudiaBuff  = null;
