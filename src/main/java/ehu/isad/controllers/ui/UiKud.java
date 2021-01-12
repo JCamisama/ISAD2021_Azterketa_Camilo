@@ -1,6 +1,7 @@
 package ehu.isad.controllers.ui;
 
 
+import ehu.isad.controllers.db.WebKudeatzaile;
 import org.apache.commons.codec.binary.Hex;
 
 import java.io.InputStream;
@@ -24,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class UiKud implements Initializable {
@@ -45,19 +47,26 @@ public class UiKud implements Initializable {
 
 
     @FXML
-    void onClickBtn(ActionEvent event) throws IOException {
+    void onClickBtn(ActionEvent event) throws IOException, SQLException {
 
         String urlHau = this.urlText.getText();
         String md5Sum = this.getMd5Hash(urlHau+"/README");
 
         this.bilaketaKudeatu(md5Sum);
 
-        this.testuAdierazlea.setText(md5Sum);
+        //this.testuAdierazlea.setText(md5Sum);
     }
 
-    private void bilaketaKudeatu(String pMd5Sum) {
+    private void bilaketaKudeatu(String pMd5Sum) throws SQLException {
 
+        Boolean badago = WebKudeatzaile.getInstance().webDatubaseanDago(pMd5Sum);
 
+        if(badago){
+            this.testuAdierazlea.setText("Datubasean Zegoen.");
+        }
+        else{
+            this.testuAdierazlea.setText("Ez da datubasean aurkirtu.");
+        }
     }
 
     private String getMd5Hash(String pEdukia) {
