@@ -1,0 +1,6 @@
+dbname=txanponak
+user=admin
+password=Datu_Base_Or_Die
+useSSL=FALSE
+serverTimezone=Europe/Madrid
+irudienDirektorioa=src/main/resources/

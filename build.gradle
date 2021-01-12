@@ -40,4 +40,4 @@ dependencies {
 }
 
 // Define the main class for the application
-mainClassName = 'isad.ehu.App'
+mainClassName = 'ehu.isad.Nagusia'
