@@ -52,21 +52,29 @@ public class UiKud implements Initializable {
         String urlHau = this.urlText.getText();
         String md5Sum = this.getMd5Hash(urlHau+"/README");
 
-        this.bilaketaKudeatu(md5Sum);
+        this.bilaketaKudeatu(md5Sum, urlHau);
 
         //this.testuAdierazlea.setText(md5Sum);
     }
 
-    private void bilaketaKudeatu(String pMd5Sum) throws SQLException {
+    private void bilaketaKudeatu(String pMd5Sum, String pUrl) throws SQLException {
 
         Boolean badago = WebKudeatzaile.getInstance().webDatubaseanDago(pMd5Sum);
 
         if(badago){
             this.testuAdierazlea.setText("Datubasean Zegoen.");
+            WebOrria bilatutakoa = WebKudeatzaile.getInstance().webDatubasetikAtera(pMd5Sum, pUrl);
+            this.webZerrenda.add(bilatutakoa);
+
         }
         else{
             this.testuAdierazlea.setText("Ez da datubasean aurkirtu.");
+            WebOrria webBerria = new WebOrria();
+            webBerria.setUrl(pUrl);
+            webBerria.setMd5String(pMd5Sum);
+            this.webZerrenda.add(webBerria);
         }
+        this.modeloarenDatuakTaulanTxertatu();
     }
 
     private String getMd5Hash(String pEdukia) {
@@ -116,32 +124,6 @@ public class UiKud implements Initializable {
     }
 
 
-
-
-    /*
-    private String getMd5Hash_Backup(String pEdukia){
-
-        String plaintext = "your text here";
-        MessageDigest m = null;
-        try {
-            m = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        m.reset();
-        m.update(plaintext.getBytes());
-        byte[] digest = m.digest();
-        BigInteger bigInt = new BigInteger(1,digest);
-        String hashtext = bigInt.toString(16);
-// Now we need to zero pad it if you actually want the full 32 chars.
-        while(hashtext.length() < 32 ){
-            hashtext = "0"+hashtext;
-        }
-
-        return hashtext;
-    }
-     */
-
     //Metodoak
     public void setMainApp(Nagusia pMainApp) {
         this.mainApp = pMainApp;
@@ -149,15 +131,10 @@ public class UiKud implements Initializable {
 
     public void hasieratu() {
 
-        //TODO
-        /*
-        this.pertsonakKargatu();
-        this.taulaEzkerra.setEditable(true);
-        this.taulaEskuina.setEditable(true);
-        this.modeloarenDatuakTaulanTxertatu();
-        this.taulaEzkerra.getSelectionModel().selectLast();
 
-         */
+        this.taula.setEditable(true);
+        this.modeloarenDatuakTaulanTxertatu();
+
     }
 
     private void modeloarenDatuakTaulanTxertatu(){
@@ -183,6 +160,8 @@ public class UiKud implements Initializable {
             String balioa = event.getNewValue();
 
             webHau.setBertsioa(balioa);
+
+            WebKudeatzaile.getInstance().bertsioAldaketaKudeatu(webHau);
         });
     }
 
