@@ -11,13 +11,13 @@ import javafx.stage.Stage;
 public class Nagusia extends Application {
 
     //Atributuak
-    private Parent pertsonakUI;
+    private Parent azterketaUI;
 
     private Stage stage;
     private UiKud kudeatzaile;
     private Scene eszena;
 
-    private String leihoa       = "/azterketa2.fxml";
+    private String leihoa       = "/azterketa2021.fxml";
 
 
     @Override
@@ -26,13 +26,13 @@ public class Nagusia extends Application {
 
         this.stage = primaryStage;
         FXMLLoader loaderPertsonak = new FXMLLoader(getClass().getResource(this.leihoa));
-        this.pertsonakUI = (Parent) loaderPertsonak.load();
+        this.azterketaUI = (Parent) loaderPertsonak.load();
         this.kudeatzaile = loaderPertsonak.getController();
         this.kudeatzaile.setMainApp(this);
         this.kudeatzaile.hasieratu();
 
-        this.stage.setTitle("Azterketa DATA");
-        this.eszena = new Scene(this.pertsonakUI);
+        this.stage.setTitle("Azterketa 2021");
+        this.eszena = new Scene(this.azterketaUI);
 
         this.eszenaErakutsi(this.eszena);
 
