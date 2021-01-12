@@ -162,6 +162,8 @@ public class UiKud implements Initializable {
             webHau.setBertsioa(balioa);
 
             WebKudeatzaile.getInstance().bertsioAldaketaKudeatu(webHau);
+
+            this.testuAdierazlea.setText("md5 eta bertsio berria datubasean sartu dira");
         });
     }
 
